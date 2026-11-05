@@ -10,7 +10,7 @@
 - **Agent-facing docs are English** (this file, `docs/agent/*`, `.claude/**`, conventions under `docs/conventions/`). Keep them terse.
 - **User/interviewer-facing docs are Korean**: `docs/STATUS.ko.md`, `docs/learning/*`, `docs/adr/*`, `docs/db/*`, `README.md`, PR descriptions.
 - `docs/STATUS.ko.md` / `docs/SCOPE.ko.md` are Korean views of `docs/agent/STATUS.md` / `docs/agent/SCOPE.md`. Never edit only one side.
-- Talk to the user in Korean.
+- Talk to the user in Korean. Guides, learning notes, and Notion pages use 개조식 endings (`~함`, `~됨`, `~임`), not `~해요`, and give a copy-ready example for every command.
 
 ## Project
 - Game server portfolio. 2026-12-31 is a **soft target, not a deadline**. Collection RPG + 2–4p real-time co-op raid. Shallow gameplay, **server features must be visible** (debug panel, admin tool, Grafana, demo scenarios).
@@ -29,7 +29,7 @@
 2. Teach-back: user explains, agent corrects
 3. 5 interview questions (include DB and pattern questions)
 4. 15–30 min variation task done by the user
-5. Korean note at `docs/learning/NN-topic.md` (source of truth), then a row in Notion inline DB "학습·결정 노트" (`collection://a7f8bfbe-399c-472d-affd-a6829b646f36`; props 제목, 날짜, 유형=학습|결정|트러블슈팅, 주제, 복습=미복습; body = 3–4 bullets + **면접 질문** 1–2)
+5. Korean note at `docs/learning/NN-topic.md` (source of truth), then a row in Notion inline DB "학습 노트" (`collection://a7f8bfbe-399c-472d-affd-a6829b646f36`; props 순서 (last + 1), 제목, 주제, 복습=미복습, 날짜 only; body starts with a 🎯 callout (왜 썼나 one line + 확인 질문, answer below), then 요약 → 어떻게 → 궁금했던 점 Q&A → 면접 질문 → 새로 쓴 명령)
 
 Guide the user to write core logic (concurrency, transactions, Room JobQueue) themselves; the agent writes boilerplate only.
 
@@ -37,7 +37,10 @@ Guide the user to write core logic (concurrency, transactions, Room JobQueue) th
 - New tooling/infra tasks (Docker, migrations, Redis, dotnet CLI, debugging, CI edits, AWS deploy, k6, Unity setup, git/PR flow): agent writes a Korean hands-on guide, **the user executes**, agent only assists.
 - Stages tracked in `docs/agent/STATUS.md` → Practice tracker: `guide → practicing → comfortable → automated`.
 - After 2 unaided successes + teach-back passed, **ask** "자동화할까요?". Automate only after the user approves (or orders it).
-- Guide lifecycle: give hands-on guides **in chat** (Korean, step by step); do not create repo files for them. After the user completes it, publish the **full guide as Markdown** to Notion "학습·결정 노트" (유형=학습, 주제=area, 복습=미복습). Body = the whole guide as given (with corrections), plus "실행 기록" (what happened, errors hit, fixes) and the teach-back Q&A. For guides, Notion is the archive.
+- Guide lifecycle: give hands-on guides **in chat** (Korean; for every flag/option explain **why** it is added and what happens without it, e.g. `-u`); do not create repo files for them. Chunk steps into sensible batches (e.g. 1–3, then 4–7, split at natural checkpoints), not one step per message. Each batch: goal line, numbered steps with commands, option table/one-liners, success criteria, common failures. After the user completes it, publish the **full guide as Markdown** to Notion "학습 노트" (same props/body template as the learning routine). Add newly used commands to Notion page "명령어·옵션 모음" (`40ff1049927d81a78920d27a4ebeadb1`; per-tool tables: 명령·옵션 | 왜 붙이나 (안 붙이면?) | 예시 (copy-ready, this repo)). Body = the whole guide as given (with corrections), plus "실행 기록" (what happened, errors hit, fixes) and the teach-back Q&A. For guides, Notion is the archive.
+- Topic digests: when one 주제 has 3+ 학습 노트 rows, **ask** to merge them into a digest child page under Notion page "📚 주제별 정리" (create the parent on first digest; plain pages, no DB/props). Digest = deduped core → flow → 면접 Q&A toggles → links to source notes. Keep source rows; update the digest when new notes on that topic arrive.
+- Before writing any learning note (Notion or `docs/learning/`): ask the user "추가로 궁금한 점?" and include those Q&As. Format for scanability: summary at top, headings, tables, callouts, code blocks.
+- Tooling timing: when starting a task, check STATUS "Tooling candidates" for a plugin/MCP tied to that task or week and **ask** "추가할까요?" with the reason. Install only after approval. The user installs it (plugin management is practice). Never install proactively.
 - Never run a not-yet-automated task for the user. Exceptions: read-only status commands, boilerplate, formatting, doc drafts.
 
 ## Parallel sessions
