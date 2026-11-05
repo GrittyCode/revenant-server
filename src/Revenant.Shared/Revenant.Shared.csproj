@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Unity와 서버가 같은 소스를 컴파일한다.
+    실제 소스는 Unity 로컬 UPM 패키지(shared/com.revenant.shared)에 있고,
+    이 csproj는 서버 빌드를 위해 그 파일들을 포함만 한다. (bin/obj가 Unity 패키지 안에 생기지 않도록 분리)
+  -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>Revenant.Shared</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../../shared/com.revenant.shared/Runtime/**/*.cs" />
+  </ItemGroup>
+
+</Project>

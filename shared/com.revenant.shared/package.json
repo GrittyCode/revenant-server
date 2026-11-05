@@ -1,0 +1,7 @@
+{
+  "name": "com.revenant.shared",
+  "version": "0.1.0",
+  "displayName": "Revenant Shared",
+  "description": "Packets and DTOs shared between the Revenant Unity client and servers.",
+  "unity": "6000.3"
+}

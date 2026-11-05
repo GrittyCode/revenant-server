@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Revenant.Api/Revenant.Api.csproj" />
+    <Project Path="src/Revenant.Realtime/Revenant.Realtime.csproj" />
+    <Project Path="src/Revenant.Shared/Revenant.Shared.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Revenant.Tests/Revenant.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    # 배포 대상(EC2 Graviton)과 같은 arm64. 공개 리포는 무료.
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore Revenant.slnx
+
+      - name: Format check
+        run: dotnet format Revenant.slnx --verify-no-changes --no-restore
+
+      - name: Build
+        run: dotnet build Revenant.slnx -c Release --no-restore
+
+      - name: Test
+        run: dotnet test --solution Revenant.slnx -c Release --no-build

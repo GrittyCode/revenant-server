@@ -1,0 +1,25 @@
+<Project>
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Shared(netstandard2.1, C# 9)는 자기 csproj에서 끈다 -->
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Restore">
+    <!-- 프로젝트마다 packages.lock.json을 만들어 전이 의존성까지 버전을 고정한다 -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <!-- GitHub Actions는 GITHUB_ACTIONS=true를 설정한다 -->
+  <PropertyGroup Label="CI" Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <!-- lock 파일과 다른 버전이 필요하면 restore를 실패시킨다 -->
+    <RestoreLockedMode>true</RestoreLockedMode>
+    <!-- 빌드 결과물에 로컬 경로를 넣지 않는다 (결정적 빌드) -->
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+</Project>

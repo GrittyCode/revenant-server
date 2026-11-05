@@ -1,0 +1,33 @@
+# 기본: git이 텍스트로 판단한 파일은 저장소에 LF로 저장하고, 체크아웃할 때도 LF로 꺼낸다
+* text=auto eol=lf
+
+# diff에서 hunk 헤더에 메서드 이름을 보여준다
+*.cs   diff=csharp
+
+# Windows 전용 스크립트는 CRLF
+*.cmd  text eol=crlf
+*.bat  text eol=crlf
+*.ps1  text eol=crlf
+
+# Unity YAML (Force Text 직렬화). merge=unityyamlmerge는 로컬 git config에 드라이버를 등록해야 동작한다
+*.unity      text merge=unityyamlmerge eol=lf
+*.prefab     text merge=unityyamlmerge eol=lf
+*.asset      text merge=unityyamlmerge eol=lf
+*.mat        text merge=unityyamlmerge eol=lf
+*.anim       text merge=unityyamlmerge eol=lf
+*.controller text merge=unityyamlmerge eol=lf
+*.meta       text eol=lf
+
+# 바이너리 에셋 -> Git LFS
+*.png      filter=lfs diff=lfs merge=lfs -text
+*.jpg      filter=lfs diff=lfs merge=lfs -text
+*.gif      filter=lfs diff=lfs merge=lfs -text
+*.psd      filter=lfs diff=lfs merge=lfs -text
+*.aseprite filter=lfs diff=lfs merge=lfs -text
+*.ase      filter=lfs diff=lfs merge=lfs -text
+*.fbx      filter=lfs diff=lfs merge=lfs -text
+*.wav      filter=lfs diff=lfs merge=lfs -text
+*.mp3      filter=lfs diff=lfs merge=lfs -text
+*.ogg      filter=lfs diff=lfs merge=lfs -text
+*.ttf      filter=lfs diff=lfs merge=lfs -text
+*.otf      filter=lfs diff=lfs merge=lfs -text
